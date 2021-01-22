@@ -5,12 +5,12 @@ CREATE DATABASE posts;
 -- incresando a la base de datos con el usuario
 \c posts
 -- creando tabla post con atributos
-CREATE TABLE post (
-  id_post SERIAL,
+CREATE TABLE post(
+  id_post SERIAL PRIMARY KEY,
   name_user VARCHAR(35),
   creation_date DATE,
   content VARCHAR(50),
-  descrip VARCHAR(150),
+  descrip VARCHAR(150)
 );
 -- creando post para los usuarios "Pamela" y "Carlos"
 INSERT INTO post(name_user, creation_date, content, descrip) VALUES
@@ -23,11 +23,12 @@ ALTER TABLE post ADD COLUMN title VARCHAR(20);
 -- agregando titulo a las publiaciones ya ingresadas
 UPDATE post
 SET title='mi michi' 
-WHERE id=1;
+WHERE id_post=1;
+
 UPDATE post
 SET title='chems' 
-WHERE id=2
-OR id=3;
+WHERE id_post=2
+OR id_post=3;
 -- agregando post a pedro
 INSERT INTO post(name_user, creation_date, content, descrip, title) VALUES
 ('Pedro', '2021-01-16', 'musica de youtube', 'como amo este remix', 'remix playero'),
@@ -44,15 +45,9 @@ INSERT INTO post(name_user, creation_date, content, descrip, title) VALUES
 CREATE TABLE coments(
   id_comnets SERIAL,
   creation_date TIMESTAMP,
-  content VARCHAR(150)
-  id_asign INTEGER REFERENCES post(id_post),
+  content VARCHAR(150),
+  id_asign INTEGER REFERENCES post(id_post)
 );
--- agregando clave
-ALTER TABLE post
-ADD PRIMARY KEY (user_name);
--- relacionando tablas
-ALTER TABLE coments
-ADD FOREIGN KEY (id) REFERENCES post(user_name);
 -- creando comentarios
 INSERT INTO coments(creation_date, content, id_asign) VALUES
 ('2021-01-19 15:33:00', 'que hermosa tu michi!',1),
